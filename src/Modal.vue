@@ -39,6 +39,11 @@ export default {
   },
   methods: {
   },
+  beforeUpdate() {
+    if(this.month === 2) {
+      alert('2개월은 너무 적음.. 안팝니다')
+    }
+  }
 }
 </script>
 

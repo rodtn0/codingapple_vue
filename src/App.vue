@@ -9,10 +9,15 @@
 
   <!-- 메뉴 -->
   <div class="menu">
-    <a v-for="a in 메뉴들" :key="a">{{ a }}</a>
+    <a v-for="a in 메뉴들" :key="a"> {{ a }} </a>
   </div>
 
-  <Discount/>
+  <Discount v-if="showDiscount == true"/>
+  <p>지금 결제하면 {{ amount }}% 할인</p>
+
+  <button @click="priceSort">가격순정렬</button>
+  <button @click="priceReverse">가격역순정렬</button>
+  <button @click="sortBack">되돌리기</button>
 
   <Card @openModal="모달창열렸니 = true; 누른거 = $event"
         :원룸="원룸들[i]" v-for="(원룸, i) in 원룸들" :key="원룸"/>
@@ -36,6 +41,9 @@ export default {
   name: 'App',
   data(){
     return{
+      amount : 30,
+      showDiscount : true,
+      원룸들오리지널 : [...data],
       오브젝트 : {name : 'kim', age : 20},
       누른거 : 0,
       원룸들 : data,
@@ -50,7 +58,30 @@ export default {
   methods:{
     increase(){
       this.신고수 += 1;
+    },
+    priceSort(){
+      this.원룸들.sort(function (a, b){
+        return a.price - b.price
+      });
+    },
+    priceReverse(){
+      this.원룸들.reverse(function (a, b){
+        return a.price - b.price
+      });
+    },
+    sortBack(){
+      this.원룸들 = [...this.원룸들오리지널];
     }
+  },
+  created() {
+  },
+  mounted() {
+    setTimeout(()=>{
+      this.showDiscount = false;
+    }, 2000),
+    setInterval(()=>{
+      this.amount--;
+    }, 1000);
   },
   components: {
     Discount : Discount,
