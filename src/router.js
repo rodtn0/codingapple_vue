@@ -1,7 +1,9 @@
 import { createWebHistory, createRouter } from "vue-router";
-import List from "./components/List.vue";
 import Home from "./components/Home";
+import List from "./components/List";
 import Detail from "./components/Detail";
+import Author from "./components/Author";
+import Comment from "./components/Comment";
 
 const routes = [
    {
@@ -13,10 +15,19 @@ const routes = [
       component: List,
    },
    {
-      path: "/detail",
+      path: "/detail/:id",
       component: Detail,
+      children: [
+         {
+            path: "author",
+            component: Author,
+         },
+         {
+            path: "comment",
+            component: Comment,
+         },
+      ]
    },
-
 ];
 
 const router = createRouter({
